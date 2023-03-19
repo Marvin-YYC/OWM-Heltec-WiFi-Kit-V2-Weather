@@ -4,7 +4,7 @@
 * Auteur : Johann Brochier
 * 
 * Open Weather Map API data for Heltec WiFi Kit V2
-* This revised version created March 2023 by 𝗚𝗖𝕄𝕒𝕣𝕧𝕚𝕟
+* This revised version created March 2023 by GC_Marvin-yyc
 * 
 */
 
