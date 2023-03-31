@@ -79,7 +79,7 @@ void displayWeather(String payload){
             return;
         } else {
             const char* location = doc["name"];     // automatically inserts the"name" of city/town from data
-            Heltec.display->setBrightness(150);     //screen brightness level - 0 is really dim but visible, 255 is max bright
+            Heltec.display->setBrightness(50);     //screen brightness level - 0 is really dim but visible, 255 is max bright
             Heltec.display->setTextAlignment(TEXT_ALIGN_LEFT);
             Heltec.display->setFont(ArialMT_Plain_16);
             Heltec.display -> drawString(0, 0, location);
@@ -88,17 +88,25 @@ void displayWeather(String payload){
             JsonObject data = doc["main"];          // temperature data
             JsonObject weather = doc["weather"][0]; // required for weather icons
             JsonObject wind = doc["wind"];          // for wind data
+            JsonObject clouds = doc["clouds"];      // for cloud cover data
             float temperature = data["temp"]; //I used float data for more accurate integer - rounds up or down with no decimal place
             float feels = data["feels_like"];
-            float lotemp = data["temp_min"];
-            float hitemp = data["temp_max"];
+            //float lotemp = data["temp_min"];
+            //float hitemp = data["temp_max"];
             int pressure = data["pressure"];
             int humidity = data["humidity"];
             float windspeed = wind["speed"];
-            float windgust = wind["gust"];                 
-            Heltec.display -> drawString(0, 18,  "wchill:  " + String(feels,0) + "°c");       // '0' = no decimal - windchill or realfeel or feelslike
-            Heltec.display -> drawString(0, 27,  "Hi:  " + String (hitemp,0) + "°c");         // forecast high temp
-            Heltec.display -> drawString(44, 27, "Lo:  " + String (lotemp,0) + "°c");         //forecast low temp
+            float windgust = wind["gust"];
+            int cloudcover = clouds["all"];
+            String desc = weather["description"];
+            String cloud = weather["main"];
+            float vsblty = doc["visibility"]; 
+            Heltec.display -> drawString(0, 18, String(cloud));
+            Heltec.display -> drawString(65, 27, "Cc:" + String(cloudcover) + "%");
+            Heltec.display -> drawString(0, 27, "> " + String(desc));
+            //Heltec.display -> drawString(0, 18,  "wchill:  " + String(feels,0) + "°c");       // '0' = no decimal - windchill or realfeel or feelslike
+            //Heltec.display -> drawString(0, 27,  "Hi:  " + String (hitemp,0) + "°c");         // forecast high temp
+            //Heltec.display -> drawString(44, 27, "Lo:  " + String (lotemp,0) + "°c");         //forecast low temp
             Heltec.display -> drawString(0, 36,  "RHumi:  " + (String)humidity + "%");        // relative humidity
             Heltec.display -> drawString(0, 45,  "BPress: " + (String)pressure + " hPa");     //barometric pressure
             Heltec.display -> drawString(0, 54, "Wnd: " + String(windspeed*3.6,0));           //convert m/s to km/h *3.6 - '0' with no decimal
