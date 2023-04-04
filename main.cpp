@@ -87,6 +87,8 @@ void displayWeather(String payload){
             Heltec.display->setTextAlignment(TEXT_ALIGN_LEFT);
             Heltec.display->setFont(ArialMT_Plain_16);
             Heltec.display -> drawString(0, 0, location);
+            //Heltec.display -> setFont(ArialMT_Plain_10);  // comment out lines 88+89
+            //Heltec.display -> drawString(0, 0, ("YOURCITY"));   // added this line here so I could make "location" all caps small font (does not auto instert location)
             Heltec.display->setTextAlignment(TEXT_ALIGN_LEFT);
             Heltec.display->setFont(ArialMT_Plain_10);
             JsonObject data = doc["main"];          // temperature data
@@ -126,7 +128,11 @@ void displayWeather(String payload){
             Heltec.display -> setFont(ArialMT_Plain_16);
             Heltec.display -> drawString(129, 0, String(temperature,0) + "°");  //'0'= no decimal - this places current temp to right of location(town/city)in large font
             Heltec.display -> drawString(129, 23, String(feels,0) + "°");       // windchill or realfeel or feelslike - moved this up here for better visibility
-
+           
+            //Heltec.display -> setTextAlignment(TEXT_ALIGN_LEFT); //Moves wxDescription under small place name in larger font
+            //Heltec.display -> setFont(ArialMT_Plain_16);
+            //Heltec.display -> drawString(0, 12, String(desc));
+          
             displayIcon(sky);             // call function weather icon
             signalBars();                 // call function wifi signal quality    
             Heltec.display -> display(); 
@@ -220,7 +226,7 @@ void loop() {
         Serial.println("Done . . . next weather update in 30 min");
         http.end(); // release of resources
         Serial.println("END HTTP 1");
-        delay (1800000); // This delay is set to update weather imformation every 1,800,000 Milliseconds (30 Minutes)  
+        delay (1800000); // / This delay is set to update weather imformation every 1,800,000 Milliseconds (30 Minutes) //900,000 = (15 min) //1,200,000 = (20 min)
     } else {
       Heltec.display -> clear();
       Heltec.display -> setBrightness(50); //screen brightness level - 0 is really dim but visible, 255 is max bright
