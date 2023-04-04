@@ -83,6 +83,8 @@ void displayWeather(String payload){
             Heltec.display->setTextAlignment(TEXT_ALIGN_LEFT);
             Heltec.display->setFont(ArialMT_Plain_16);
             Heltec.display -> drawString(0, 0, location);
+            //Heltec.display -> setFont(ArialMT_Plain_10);  // comment out lines 84+85 above
+            //Heltec.display -> drawString(0, 0, ("YOURCITY"));      // added this so I could make "location" all caps small font (does not auto instert location)
             Heltec.display->setTextAlignment(TEXT_ALIGN_LEFT);
             Heltec.display->setFont(ArialMT_Plain_10);
             JsonObject data = doc["main"];          // temperature data
@@ -120,7 +122,11 @@ void displayWeather(String payload){
             Heltec.display -> setTextAlignment(TEXT_ALIGN_RIGHT);
             Heltec.display -> drawString(127, 0, String(temperature,0) + "°");  //'0'= no decimal - this places current temp to right of location(town/city)in large font
             Heltec.display -> drawString(127, 21, String(feels,0) + "°");       // windchill or realfeel or feelslike - moved this up here for better visibility
-
+            
+            //Heltec.display -> setTextAlignment(TEXT_ALIGN_LEFT); //For large font desc, comment out desc above
+            //Heltec.display -> setFont(ArialMT_Plain_16);
+            //Heltec.display -> drawString(0, 12, String(desc));
+            
             String sky = weather["icon"];
             displayIcon(sky);
             signalBars(); // wifi signal quality display   
@@ -167,7 +173,7 @@ void displayIcon(String sky) { // cloud conditions icon
     // Weather Icon - 100,15,32,32  (leftline,topline,width,height)
     //Heltec.display -> drawXbm(80,15,30,30,(const unsigned char *)icon);
 }
-void signalBars () {              // wifi signal strength bars - I altered these paramaters, as they were showing no bars but it was still able to receive data.
+void signalBars () {        // wifi signal strength bars - I altered these paramaters, as they were showing no bars but it was still able to receive data.
       long rssi = WiFi.RSSI();
       int bars;
       if (rssi > -55) { 
